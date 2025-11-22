@@ -87,6 +87,49 @@ npm run build
 
 The built files will be in the `dist` directory, ready for deployment.
 
+## 🚀 Deployment
+
+This project is configured for easy deployment on popular platforms:
+
+### Netlify
+
+1. **Connect your repository** to Netlify
+2. **Build settings** (auto-detected):
+   - Build command: `npm run build`
+   - Publish directory: `dist`
+3. **Deploy!** Netlify will automatically handle SPA routing via `netlify.toml`
+
+**Or deploy via CLI:**
+```bash
+npm install -g netlify-cli
+netlify deploy --prod
+```
+
+### Vercel
+
+1. **Import your repository** to Vercel
+2. **Build settings** (auto-detected):
+   - Framework Preset: Vite
+   - Build Command: `npm run build`
+   - Output Directory: `dist`
+3. **Deploy!** Vercel will automatically handle routing via `vercel.json`
+
+**Or deploy via CLI:**
+```bash
+npm install -g vercel
+vercel --prod
+```
+
+### Other Platforms
+
+The project can be deployed to any static hosting service:
+- **GitHub Pages**: Set `base: '/repo-name/'` in `vite.config.js`
+- **Cloudflare Pages**: Connect repository, build command: `npm run build`
+- **AWS S3 + CloudFront**: Upload `dist` folder contents
+- **Firebase Hosting**: Use `firebase init` and deploy `dist` folder
+
+All platforms support the SPA routing via redirects configured in the respective config files.
+
 ## 📁 Project Structure
 
 ```
