@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- Primary Meta Tags -->
+  <title>Seasonal 365-Day Tree Calendar - Interactive Three.js Visualization</title>
+  <meta name="title" content="Seasonal 365-Day Tree Calendar - Interactive Three.js Visualization">
+  <meta name="description" content="A beautiful interactive 3D tree calendar visualization where 365 leaves represent each day of the year. Built with Three.js, featuring seasonal branches, dynamic leaf coloring, and immersive animations. Created by Mustafa Savul.">
+  <meta name="keywords" content="tree calendar, 365 day calendar, Three.js, interactive calendar, seasonal calendar, 3D visualization, webgl, calendar visualization, Mustafa Savul, frontend developer">
+  <meta name="author" content="Mustafa Savul">
+  <meta name="robots" content="index, follow">
+  <meta name="language" content="English">
+  <meta name="revisit-after" content="7 days">
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://tree-calendar.mustafasavul.com/">
+  <meta property="og:title" content="Seasonal 365-Day Tree Calendar - Interactive Three.js Visualization">
+  <meta property="og:description" content="A beautiful interactive 3D tree calendar visualization where 365 leaves represent each day of the year. Built with Three.js, featuring seasonal branches, dynamic leaf coloring, and immersive animations.">
+  <meta property="og:image" content="https://tree-calendar.mustafasavul.com/og-image.jpg">
+  <meta property="og:site_name" content="Seasonal Tree Calendar">
+  <meta property="og:locale" content="en_US">
+  
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://tree-calendar.mustafasavul.com/">
+  <meta property="twitter:title" content="Seasonal 365-Day Tree Calendar - Interactive Three.js Visualization">
+  <meta property="twitter:description" content="A beautiful interactive 3D tree calendar visualization where 365 leaves represent each day of the year. Built with Three.js, featuring seasonal branches, dynamic leaf coloring, and immersive animations.">
+  <meta property="twitter:image" content="https://tree-calendar.mustafasavul.com/og-image.jpg">
+  <meta property="twitter:creator" content="@mustafasavul">
+  
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://tree-calendar.mustafasavul.com/">
+  
+  <!-- Structured Data (JSON-LD) for SEO -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Seasonal 365-Day Tree Calendar",
+    "description": "A beautiful interactive 3D tree calendar visualization where 365 leaves represent each day of the year. Built with Three.js, featuring seasonal branches, dynamic leaf coloring, and immersive animations.",
+    "url": "https://tree-calendar.mustafasavul.com/",
+    "applicationCategory": "VisualizationApplication",
+    "operatingSystem": "Web Browser",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "author": {
+      "@type": "Person",
+      "name": "Mustafa Savul",
+      "url": "https://mustafasavul.com/",
+      "jobTitle": "Front End Developer",
+      "worksFor": {
+        "@type": "Organization",
+        "name": "LCWaikiki"
+      },
+      "sameAs": [
+        "https://mustafasavul.com/",
+        "https://www.linkedin.com/in/mustafasavul",
+        "https://github.com/mustafasavul"
+      ]
+    },
+    "creator": {
+      "@type": "Person",
+      "name": "Mustafa Savul",
+      "url": "https://mustafasavul.com/"
+    },
+    "keywords": "tree calendar, 365 day calendar, Three.js, interactive calendar, seasonal calendar, 3D visualization, webgl, calendar visualization",
+    "inLanguage": "en",
+    "isAccessibleForFree": true,
+    "featureList": [
+      "Interactive 3D tree visualization",
+      "365 leaves representing days of the year",
+      "Seasonal branch coloring",
+      "Dynamic leaf status (past/today/future)",
+      "Hover tooltips with date information",
+      "Smooth animations and camera controls"
+    ],
+    "softwareHelp": {
+      "@type": "CreativeWork",
+      "text": "Drag to rotate camera, scroll to zoom, hover over leaves to see date information"
+    }
+  }
+  </script>
+  
+  <!-- Additional Structured Data for CreativeWork -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "name": "Seasonal 365-Day Tree Calendar",
+    "description": "A beautiful interactive 3D tree calendar visualization built with Three.js",
+    "creator": {
+      "@type": "Person",
+      "name": "Mustafa Savul",
+      "url": "https://mustafasavul.com/"
+    },
+    "dateCreated": "2025",
+    "programmingLanguage": "JavaScript",
+    "runtimePlatform": "Web Browser",
+    "softwareRequirements": "Modern web browser with WebGL support"
+  }
+  </script>
+  
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <div id="app"></div>
+  
+  <!-- UI Overlay -->
+  <div class="ui-overlay" id="uiOverlay">
+    <div class="ui-toggle-btn" id="uiToggleBtn" title="Show Calendar Info">
+      <span class="toggle-icon">📅</span>
+    </div>
+    <div class="ui-content" id="uiContent">
+      <button class="close-btn" id="uiCloseBtn" title="Close" aria-label="Close">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 4L4 12M4 4L12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <h1>Seasonal Tree Calendar</h1>
+      <p class="subtitle">365 leaves = 365 days</p>
+      <p class="current-date" id="currentDate"></p>
+      <div class="leaf-stats">
+        <div class="stat-item">
+          <span class="stat-label">Leaves Fallen</span>
+          <span class="stat-value" id="leavesFallen">0</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-label">Leaves Remaining</span>
+          <span class="stat-value" id="leavesRemaining">365</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tooltip -->
+  <div class="tooltip" id="tooltip"></div>
+
+  <!-- Season Control Panel -->
+  <div class="season-panel" id="seasonPanel">
+    <div class="season-toggle-btn" id="seasonToggleBtn" title="Show Seasons">
+      <span class="toggle-icon">🌳</span>
+    </div>
+    <div class="season-content" id="seasonContent">
+      <button class="close-btn" id="seasonCloseBtn" title="Close" aria-label="Close">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 4L4 12M4 4L12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <div class="season-panel-title">Seasons</div>
+      <div class="season-buttons">
+      <button class="season-btn" data-season="spring" title="Spring">
+        <span class="season-icon">🌸</span>
+        <span class="season-name">Spring</span>
+      </button>
+      <button class="season-btn" data-season="summer" title="Summer">
+        <span class="season-icon">☀️</span>
+        <span class="season-name">Summer</span>
+      </button>
+      <button class="season-btn" data-season="autumn" title="Autumn">
+        <span class="season-icon">🍂</span>
+        <span class="season-name">Autumn</span>
+      </button>
+      <button class="season-btn" data-season="winter" title="Winter">
+        <span class="season-icon">❄️</span>
+        <span class="season-name">Winter</span>
+      </button>
+    </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="main-footer">
+    <div class="footer-content">
+      <p class="footer-text">
+        <span>Created by <a href="https://mustafasavul.com/" target="_blank" rel="noopener noreferrer">Mustafa Savul</a></span>
+        <span class="footer-separator">•</span>
+        <span>Built with <a href="https://threejs.org/" target="_blank" rel="noopener noreferrer">Three.js</a></span>
+        <span class="footer-separator">•</span>
+        <span><a href="/about.html" id="aboutLink">About</a></span>
+      </p>
+      <div class="footer-social">
+        <a href="https://www.linkedin.com/in/mustafasavul" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn Profile" class="social-link">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+          </svg>
+        </a>
+        <a href="https://github.com/mustafasavul" target="_blank" rel="noopener noreferrer" aria-label="GitHub Profile" class="social-link">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+          </svg>
+        </a>
+        <a href="https://mustafasavul.com/" target="_blank" rel="noopener noreferrer" aria-label="Personal Website" class="social-link">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+            <polyline points="15 3 21 3 21 9"></polyline>
+            <line x1="10" y1="14" x2="21" y2="3"></line>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <script type="module" src="/main.js"></script>
+</body>
+</html>
+
